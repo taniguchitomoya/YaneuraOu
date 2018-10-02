@@ -43,25 +43,16 @@ namespace Eval {
 
 				// 評価関数ファイルに埋め込むハッシュ値
 				static constexpr std::uint32_t GetHashValue() {
-					//評価関数ファイルをtnk_wcsc28互換とするため、あえてhash値を変更しない
-					return PreviousLayer::GetHashValue();
-
-					/*
 					std::uint32_t hash_value = 0x0DDD1234u;
 					hash_value += PreviousLayer::GetHashValue();
 					return hash_value;
-					*/
 				}
 
 				// 入力層からこの層までの構造を表す文字列
 				static std::string GetStructureString() {
-					//評価関数ファイルをtnk_wcsc28互換とするため、あえて文字列を変更しない
-					return PreviousLayer::GetStructureString();
-					/*
 					return "Dropout[" +
 						std::to_string(kOutputDimensions) + "](" +
 						PreviousLayer::GetStructureString() + ")";
-					*/
 				}
 
 				// パラメータを読み込む
@@ -82,7 +73,7 @@ namespace Eval {
 					const auto output = reinterpret_cast<OutputType*>(buffer);
 
 					for (IndexType i = 0; i < kOutputDimensions; ++i) {
-						output[i] = input[i] / 2; //output[i] * ( 1 -  dropout ratio(0.5) )
+						output[i] = input[i] / 2; //input[i] * ( 1- dropout_ratio(0.5) )
 					}
 					return output;
 				}

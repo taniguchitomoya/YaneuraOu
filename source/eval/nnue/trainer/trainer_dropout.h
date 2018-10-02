@@ -62,7 +62,7 @@ namespace Eval {
 				std::uniform_real_distribution<double> zeroone(0.0, 1.0);
 
 				for (IndexType i = 0; i < kOutputDimensions; ++i) {
-					dropout_mask[i] = zeroone(mtrandom) < 0.5;
+					dropout_mask[i] = zeroone(mtrandom) < 0.5;//0.5 = dropout_ratio
 				}
 
 				batch_size_ = static_cast<IndexType>(batch.size());
