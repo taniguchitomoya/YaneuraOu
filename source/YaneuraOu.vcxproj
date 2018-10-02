@@ -553,8 +553,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-2018-TNK|x64'">
     <ClCompile>
-      <OpenMPSupport>
-      </OpenMPSupport>
+      <OpenMPSupport>true</OpenMPSupport>
+      <PreprocessorDefinitions>USE_AVX2;USE_BLAS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-2018-TNK-sse42|x64'">
@@ -647,6 +647,7 @@
     <ClInclude Include="eval\nnue\features\p.h" />
     <ClInclude Include="eval\nnue\layers\affine_transform.h" />
     <ClInclude Include="eval\nnue\layers\clipped_relu.h" />
+    <ClInclude Include="eval\nnue\layers\dropout.h" />
     <ClInclude Include="eval\nnue\layers\input_slice.h" />
     <ClInclude Include="eval\nnue\layers\sum.h" />
     <ClInclude Include="eval\nnue\nnue_accumulator.h" />
@@ -660,6 +661,7 @@
     <ClInclude Include="eval\nnue\trainer\trainer.h" />
     <ClInclude Include="eval\nnue\trainer\trainer_affine_transform.h" />
     <ClInclude Include="eval\nnue\trainer\trainer_clipped_relu.h" />
+    <ClInclude Include="eval\nnue\trainer\trainer_dropout.h" />
     <ClInclude Include="eval\nnue\trainer\trainer_feature_transformer.h" />
     <ClInclude Include="eval\nnue\trainer\trainer_input_slice.h" />
     <ClInclude Include="eval\nnue\trainer\trainer_sum.h" />
@@ -762,8 +764,16 @@
     <None Include="..\script\engine_invoker1.py" />
     <None Include="..\script\engine_invoker5.py" />
     <None Include="Makefile" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\OpenBLAS.0.2.14.1\build\native\openblas.targets" Condition="Exists('..\packages\OpenBLAS.0.2.14.1\build\native\openblas.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>このプロジェクトは、このコンピューター上にない NuGet パッケージを参照しています。それらのパッケージをダウンロードするには、[NuGet パッケージの復元] を使用します。詳細については、http://go.microsoft.com/fwlink/?LinkID=322105 を参照してください。見つからないファイルは {0} です。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\OpenBLAS.0.2.14.1\build\native\openblas.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OpenBLAS.0.2.14.1\build\native\openblas.targets'))" />
+  </Target>
 </Project>
